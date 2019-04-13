@@ -13,13 +13,9 @@ defmodule Awesomes.Github.FetcherTest do
 
   defp create_lib(context) do
     repo = context[:repo] || @repo
-    [username, name] = String.split(repo, "/")
 
     lib =
-      %Lib{
-        username: username,
-        name: name
-      }
+      %Lib{repo: repo}
       |> Repo.insert!()
 
     [lib: lib]
@@ -46,6 +42,16 @@ defmodule Awesomes.Github.FetcherTest do
       assert :ok == Fetcher.run(lib)
       lib = reload(lib)
       assert lib.error =~ "Not Found"
+    end
+  end
+
+  describe "fetching awesome list" do
+    test "creates child libs", %{lib: list} do
+      Fetcher.run(list)
+      children = Lib.children_libs(list)
+      list = Repo.preload(list, :categories)
+      assert length(children) > 1200
+      assert length(list.categories) > 20
     end
   end
 end

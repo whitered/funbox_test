@@ -19,6 +19,13 @@ defmodule Awesomes.Github.Client do
     |> response()
   end
 
+  def readme(lib) do
+    lib
+    |> readme_url()
+    |> get()
+    |> response()
+  end
+
   defp response({:ok, %Tesla.Env{status: 200, body: body}}) do
     {:ok, body}
   end
@@ -27,11 +34,15 @@ defmodule Awesomes.Github.Client do
     {:error, "Error fetching #{url}: #{message}"}
   end
 
-  defp repo_url(%{username: username, name: name}) do
-    Enum.join(["repos", username, name], "/")
+  defp repo_url(%{repo: repo}) do
+    "repos/" <> repo
   end
 
   defp branch_url(lib, branch) do
     Enum.join([repo_url(lib), "branches", branch], "/")
+  end
+
+  defp readme_url(lib) do
+    repo_url(lib) <> "/readme"
   end
 end
