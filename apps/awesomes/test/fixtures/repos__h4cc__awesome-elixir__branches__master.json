@@ -1,0 +1,97 @@
+{
+  "name": "master",
+  "commit": {
+    "sha": "e629e05d4e2fa9f7cc018395bff31b1a5236376b",
+    "node_id": "MDY6Q29tbWl0MjE0MDI2Mjc6ZTYyOWUwNWQ0ZTJmYTlmN2NjMDE4Mzk1YmZmMzFiMWE1MjM2Mzc2Yg==",
+    "commit": {
+      "author": {
+        "name": "Nicholas Duffy",
+        "email": "duffn@outlook.com",
+        "date": "2019-02-11T13:58:49Z"
+      },
+      "committer": {
+        "name": "Fladson Gomes",
+        "email": "fladsonthiago@gmail.com",
+        "date": "2019-02-11T13:58:49Z"
+      },
+      "message": "Remove Alher entry (#4567)\n\nThis link 404s.",
+      "tree": {
+        "sha": "86ca334ad63c01c93117b2e8a0dfca161db67880",
+        "url": "https://api.github.com/repos/h4cc/awesome-elixir/git/trees/86ca334ad63c01c93117b2e8a0dfca161db67880"
+      },
+      "url": "https://api.github.com/repos/h4cc/awesome-elixir/git/commits/e629e05d4e2fa9f7cc018395bff31b1a5236376b",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/h4cc/awesome-elixir/commits/e629e05d4e2fa9f7cc018395bff31b1a5236376b",
+    "html_url": "https://github.com/h4cc/awesome-elixir/commit/e629e05d4e2fa9f7cc018395bff31b1a5236376b",
+    "comments_url": "https://api.github.com/repos/h4cc/awesome-elixir/commits/e629e05d4e2fa9f7cc018395bff31b1a5236376b/comments",
+    "author": {
+      "login": "duffn",
+      "id": 3457341,
+      "node_id": "MDQ6VXNlcjM0NTczNDE=",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3457341?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/duffn",
+      "html_url": "https://github.com/duffn",
+      "followers_url": "https://api.github.com/users/duffn/followers",
+      "following_url": "https://api.github.com/users/duffn/following{/other_user}",
+      "gists_url": "https://api.github.com/users/duffn/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/duffn/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/duffn/subscriptions",
+      "organizations_url": "https://api.github.com/users/duffn/orgs",
+      "repos_url": "https://api.github.com/users/duffn/repos",
+      "events_url": "https://api.github.com/users/duffn/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/duffn/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "fladson",
+      "id": 554507,
+      "node_id": "MDQ6VXNlcjU1NDUwNw==",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/554507?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/fladson",
+      "html_url": "https://github.com/fladson",
+      "followers_url": "https://api.github.com/users/fladson/followers",
+      "following_url": "https://api.github.com/users/fladson/following{/other_user}",
+      "gists_url": "https://api.github.com/users/fladson/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/fladson/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/fladson/subscriptions",
+      "organizations_url": "https://api.github.com/users/fladson/orgs",
+      "repos_url": "https://api.github.com/users/fladson/repos",
+      "events_url": "https://api.github.com/users/fladson/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/fladson/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "9e142ab6cd1e11e7f877970ea491fe1c12dc3069",
+        "url": "https://api.github.com/repos/h4cc/awesome-elixir/commits/9e142ab6cd1e11e7f877970ea491fe1c12dc3069",
+        "html_url": "https://github.com/h4cc/awesome-elixir/commit/9e142ab6cd1e11e7f877970ea491fe1c12dc3069"
+      }
+    ]
+  },
+  "_links": {
+    "self": "https://api.github.com/repos/h4cc/awesome-elixir/branches/master",
+    "html": "https://github.com/h4cc/awesome-elixir/tree/master"
+  },
+  "protected": false,
+  "protection": {
+    "enabled": false,
+    "required_status_checks": {
+      "enforcement_level": "off",
+      "contexts": [
+
+      ]
+    }
+  },
+  "protection_url": "https://api.github.com/repos/h4cc/awesome-elixir/branches/master/protection"
+}

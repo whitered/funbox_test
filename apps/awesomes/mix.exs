@@ -38,7 +38,8 @@ defmodule Awesomes.MixProject do
     [
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:tesla, "~> 1.2.1"}
     ]
   end
 

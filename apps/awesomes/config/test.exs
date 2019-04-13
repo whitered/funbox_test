@@ -11,3 +11,5 @@ config :awesomes, Awesomes.Repo,
   database: "awesomes_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :tesla, adapter: Tesla.Mock
