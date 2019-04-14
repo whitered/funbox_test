@@ -13,6 +13,7 @@ defmodule Awesomes.Github.Lib do
     field :stars_count, :integer
     field :last_commit_at, :naive_datetime
     field :error, :string
+    field :fetched_at, :naive_datetime
 
     # plain lib
     belongs_to :category, Category
@@ -21,13 +22,25 @@ defmodule Awesomes.Github.Lib do
     has_many :categories, Category, foreign_key: :list_id
   end
 
+  def get_next_to_fetch() do
+    Repo.one(
+      from l in Lib,
+        where: is_nil(l.error),
+        order_by: [asc_nulls_first: :fetched_at],
+        limit: 1
+    )
+  end
+
   def awesome_list?(lib) do
     is_nil(lib.category_id)
   end
 
   def update_info(lib, params) do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+
     lib
     |> cast(params, [:description, :stars_count, :last_commit_at])
+    |> change(%{fetched_at: now})
     |> Repo.update!()
   end
 
