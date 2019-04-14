@@ -7,7 +7,8 @@ defmodule Awesomes.Application do
 
   def start(_type, _args) do
     children = [
-      Awesomes.Repo
+      Awesomes.Repo,
+      Awesomes.Github.RateLimitsGuard
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Awesomes.Supervisor)

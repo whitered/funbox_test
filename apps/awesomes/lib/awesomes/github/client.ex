@@ -4,6 +4,7 @@ defmodule Awesomes.Github.Client do
   plug Tesla.Middleware.BaseUrl, "https://api.github.com/"
   plug Tesla.Middleware.Headers, "User-Agent": "awesomes"
   plug Tesla.Middleware.JSON
+  plug Awesomes.Github.RateLimitsGuard
 
   def repo(lib) do
     lib
