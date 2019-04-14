@@ -50,12 +50,21 @@ defmodule Awesomes.Github.Lib do
   end
 
   def children_libs(list) do
-    query =
-      from l in Lib,
-        join: c in Category,
-        on: l.category_id == c.id,
-        where: c.list_id == ^list.id
+    children_query(list) |> Repo.all()
+  end
 
-    Repo.all(query)
+  defp children_query(list) do
+    from l in Lib,
+      join: c in Category,
+      on: l.category_id == c.id,
+      where: c.list_id == ^list.id
+  end
+
+  def find_disappeared(actual_ids, list) do
+    Repo.all(from l in children_query(list), where: l.id not in ^actual_ids)
+  end
+
+  def delete(lib) do
+    Repo.delete!(lib)
   end
 end

@@ -1,5 +1,6 @@
 defmodule Awesomes.Github.Category do
   use Ecto.Schema
+  import Ecto.Query
   alias Awesomes.Repo
   alias Awesomes.Github.Category
   alias Awesomes.Github.Lib
@@ -9,7 +10,7 @@ defmodule Awesomes.Github.Category do
     field :description, :string
 
     belongs_to :list, Lib
-    has_many :libs, Lib
+    has_many :libs, Lib, on_delete: :delete_all
   end
 
   def ensure_exists(list, title, description) do
@@ -27,5 +28,13 @@ defmodule Awesomes.Github.Category do
   defp create(list, title, description) do
     %Category{list: list, title: title, description: description}
     |> Repo.insert!()
+  end
+
+  def find_disappeared(actual_ids, list) do
+    Repo.all(from c in Category, where: c.list_id == ^list.id and c.id not in ^actual_ids)
+  end
+
+  def delete(category) do
+    Repo.delete!(category)
   end
 end

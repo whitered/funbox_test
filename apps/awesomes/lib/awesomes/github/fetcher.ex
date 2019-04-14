@@ -35,11 +35,21 @@ defmodule Awesomes.Github.Fetcher do
     end
   end
 
-  defp update_readme(lib) do
-    with {:ok, response} <- Client.readme(lib) do
-      response
-      |> ReadmeParser.parse()
-      |> Enum.each(&update_category(lib, &1))
+  defp update_readme(list) do
+    with {:ok, response} <- Client.readme(list) do
+      actual_entities =
+        response
+        |> ReadmeParser.parse()
+        |> Enum.map(&update_category(list, &1))
+
+      actual_entities
+      |> Enum.map(fn {category, _libs} -> category end)
+      |> clean_missing_categories(list)
+
+      actual_entities
+      |> Enum.map(fn {_category, libs} -> libs end)
+      |> List.flatten()
+      |> clean_missing_libs(list)
 
       :ok
     end
@@ -47,10 +57,25 @@ defmodule Awesomes.Github.Fetcher do
 
   defp update_category(list, %{title: title, description: description, libs: libs}) do
     category = Category.ensure_exists(list, title, description)
-    Enum.each(libs, &ensure_lib(&1, category))
+    libs = Enum.map(libs, &ensure_lib(&1, category))
+    {category, libs}
   end
 
   defp ensure_lib(repo, category) do
     Lib.insert_new(repo, category)
+  end
+
+  defp clean_missing_categories(actual_categories, list) do
+    actual_categories
+    |> Enum.map(& &1.id)
+    |> Category.find_disappeared(list)
+    |> Enum.each(&Category.delete/1)
+  end
+
+  defp clean_missing_libs(actual_libs, list) do
+    actual_libs
+    |> Enum.map(& &1.id)
+    |> Lib.find_disappeared(list)
+    |> Enum.each(&Lib.delete/1)
   end
 end
