@@ -1,6 +1,7 @@
 defmodule Awesomes.Github.Category do
   use Ecto.Schema
   import Ecto.Query
+  import Ecto.Changeset
   alias Awesomes.Repo
   alias Awesomes.Github.Category
   alias Awesomes.Github.Lib
@@ -22,6 +23,8 @@ defmodule Awesomes.Github.Category do
 
       category ->
         category
+        |> change(%{description: description})
+        |> Repo.update!()
     end
   end
 

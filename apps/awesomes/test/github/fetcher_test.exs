@@ -84,5 +84,12 @@ defmodule Awesomes.Github.FetcherTest do
       assert nil == Repo.get(Lib, lib.id)
       count_entities(list)
     end
+
+    test "updates category description", %{lib: list} do
+      category = Category.ensure_exists(list, "Actors", "Previous description")
+      Fetcher.run(list)
+      category = Repo.get(Category, category.id)
+      assert "Libraries and tools for working with actors and such." == category.description
+    end
   end
 end
