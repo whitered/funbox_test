@@ -4,8 +4,8 @@ defmodule Awesomes.Github.RateLimitsGuard do
 
   @behaviour Tesla.Middleware
 
-  @header_remaining :"X-RateLimit-Remaining"
-  @header_reset :"X-RateLimit-Reset"
+  @header_remaining "x-ratelimit-remaining"
+  @header_reset "x-ratelimit-reset"
 
   def start_link(_) do
     Agent.start_link(fn -> {60, 0} end, name: __MODULE__)
@@ -13,9 +13,15 @@ defmodule Awesomes.Github.RateLimitsGuard do
 
   def call(env, next, _options) do
     delay_till_rate_limits_reset()
-    {:ok, env} = Tesla.run(env, next)
-    update_rate_limits(env.headers)
-    {:ok, env}
+
+    case Tesla.run(env, next) do
+      {:ok, env} ->
+        update_rate_limits(env)
+        {:ok, env}
+
+      other ->
+        other
+    end
   end
 
   defp delay_till_rate_limits_reset() do
@@ -40,10 +46,17 @@ defmodule Awesomes.Github.RateLimitsGuard do
     :timer.sleep(delay)
   end
 
-  defp update_rate_limits(headers) do
-    remaining = Keyword.get(headers, @header_remaining)
-    reset = Keyword.get(headers, @header_reset)
+  defp update_rate_limits(env) do
+    remaining = get_header_int(env, @header_remaining, 60)
+    reset = get_header_int(env, @header_reset, 0)
 
     Agent.update(__MODULE__, fn _ -> {remaining, reset} end)
+  end
+
+  defp get_header_int(env, header, default) do
+    case Tesla.get_header(env, header) do
+      nil -> default
+      value -> String.to_integer(value)
+    end
   end
 end

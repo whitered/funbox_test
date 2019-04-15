@@ -1,4 +1,5 @@
 defmodule Awesomes.Github.Fetcher do
+  require Logger
   alias Awesomes.Github.Client
   alias Awesomes.Github.Lib
   alias Awesomes.Github.Category
@@ -11,7 +12,10 @@ defmodule Awesomes.Github.Fetcher do
   end
 
   # TODO: fetch commit only if info's updated_at has changed
+  # also: possible handle renamed repos (301 error)
   defp update_info(lib) do
+    Logger.info("Fetching info: " <> lib.repo)
+
     with {:ok, response_info} <- Client.repo(lib),
          branch = response_info["default_branch"],
          {:ok, response_commit} <- Client.commit(lib, branch) do
@@ -36,6 +40,8 @@ defmodule Awesomes.Github.Fetcher do
   end
 
   defp update_readme(list) do
+    Logger.info("Fetching readme: " <> list.repo)
+
     with {:ok, response} <- Client.readme(list) do
       actual_entities =
         response

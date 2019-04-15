@@ -47,9 +47,9 @@ defmodule Awesomes.Github.ClientTest do
 
   defp headers(remaining, reset_time) do
     [
-      "X-RateLimit-Limit": 60,
-      "X-RateLimit-Remaining": remaining,
-      "X-RateLimit-Reset": reset_time
+      {"x-ratelimit-limit", "60"},
+      {"x-ratelimit-remaining", remaining |> to_string()},
+      {"x-ratelimit-reset", reset_time |> to_string()}
     ]
   end
 

@@ -31,8 +31,8 @@ defmodule Awesomes.Github.Client do
     {:ok, body}
   end
 
-  defp response({:ok, %Tesla.Env{body: %{"message" => message}, url: url}}) do
-    {:error, "Error fetching #{url}: #{message}"}
+  defp response({:ok, %Tesla.Env{status: status, body: %{"message" => message}, url: url}}) do
+    {:error, "Error fetching #{url}: [#{status}] #{message}"}
   end
 
   defp repo_url(%{repo: repo}) do
