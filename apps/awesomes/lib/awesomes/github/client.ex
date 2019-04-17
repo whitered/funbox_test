@@ -31,6 +31,12 @@ defmodule Awesomes.Github.Client do
     {:ok, body}
   end
 
+  defp response(
+         {:ok, %Tesla.Env{status: 403, body: %{"message" => "API rate limit exceeded" <> _}}}
+       ) do
+    {:error, :rate_limit_exceeded}
+  end
+
   defp response({:ok, %Tesla.Env{status: status, body: %{"message" => message}, url: url}}) do
     {:error, "Error fetching #{url}: [#{status}] #{message}"}
   end

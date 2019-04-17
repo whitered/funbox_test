@@ -6,8 +6,10 @@ defmodule Awesomes.Github.Fetcher do
   alias Awesomes.Github.ReadmeParser
 
   def run(lib) do
-    update_info(lib)
-    if Lib.awesome_list?(lib), do: update_readme(lib)
+    with :ok <- update_info(lib) do
+      if Lib.awesome_list?(lib), do: update_readme(lib)
+    end
+
     :ok
   end
 
@@ -33,9 +35,12 @@ defmodule Awesomes.Github.Fetcher do
       Lib.update_info(lib, params)
       :ok
     else
+      {:error, :rate_limit_exceeded} ->
+        {:error, :rate_limit_exceeded}
+
       {:error, reason} ->
         Lib.set_error(lib, reason)
-        :ok
+        {:error, reason}
     end
   end
 
