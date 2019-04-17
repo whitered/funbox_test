@@ -73,8 +73,14 @@ defmodule Awesomes.Github.Lib do
     end
   end
 
-  def children_libs(list) do
-    children_query(list) |> Repo.all()
+  def children_libs(list, params \\ []) do
+    params
+    |> Enum.reduce(children_query(list), &apply_filter/2)
+    |> Repo.all()
+  end
+
+  defp apply_filter({:min_stars, min_stars}, query) do
+    from l in query, where: l.stars_count >= ^min_stars
   end
 
   defp children_query(list) do

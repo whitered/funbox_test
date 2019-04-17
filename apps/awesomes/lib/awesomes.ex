@@ -1,9 +1,16 @@
 defmodule Awesomes do
-  @moduledoc """
-  Awesomes keeps the contexts that define your domain
-  and business logic.
+  alias Awesomes.Github.Lib
+  alias Awesomes.Github.Category
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
+  def get_libs_with_categories(list, min_stars) do
+    libs_by_cat =
+      list
+      |> Lib.children_libs(min_stars: min_stars)
+      |> Enum.group_by(& &1.category_id)
+
+    libs_by_cat
+    |> Enum.map(fn {id, _} -> id end)
+    |> Category.get()
+    |> Enum.map(fn category -> {category, libs_by_cat[category.id]} end)
+  end
 end

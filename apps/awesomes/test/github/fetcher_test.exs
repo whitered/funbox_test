@@ -12,9 +12,7 @@ defmodule Awesomes.Github.FetcherTest do
   @categories_count 91
   @libs_count 1248
 
-  setup :create_lib
-
-  defp create_lib(context) do
+  setup context do
     repo = context[:repo] || @repo
 
     lib =

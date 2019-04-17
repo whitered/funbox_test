@@ -15,6 +15,10 @@ defmodule Awesomes.Github.Category do
     has_many :libs, Lib, on_delete: :delete_all
   end
 
+  def get(ids) when is_list(ids) do
+    Repo.all(from c in Category, where: c.id in ^ids)
+  end
+
   def ensure_exists(list, title, description) do
     title = truncate(title)
     description = truncate(description)

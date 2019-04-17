@@ -13,6 +13,10 @@ defmodule Awesomes.DataCase do
   """
 
   use ExUnit.CaseTemplate
+  import Ecto.Changeset
+  alias Awesomes.Github.Lib
+  alias Awesomes.Github.Category
+  alias Awesomes.Repo
 
   using do
     quote do
@@ -49,5 +53,20 @@ defmodule Awesomes.DataCase do
         String.replace(acc, "%{#{key}}", to_string(value))
       end)
     end)
+  end
+
+  def create_lib(repo, params \\ %{}) do
+    %Lib{repo: repo}
+    |> change(params)
+    |> Repo.insert!()
+  end
+
+  def create_category(list, params \\ %{}) do
+    %Category{
+      list: list,
+      title: Map.get(params, :title, "category title"),
+      description: Map.get(params, :description, "category description")
+    }
+    |> Repo.insert!()
   end
 end
