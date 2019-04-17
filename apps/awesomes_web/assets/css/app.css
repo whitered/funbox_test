@@ -1,3 +1,8 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
+
+.stars_selector li {
+  display: inline;
+  margin: 0 20px 0 0;
+}

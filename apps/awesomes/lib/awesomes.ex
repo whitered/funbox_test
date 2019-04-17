@@ -1,4 +1,5 @@
 defmodule Awesomes do
+  alias Awesomes.Repo
   alias Awesomes.Github.Lib
   alias Awesomes.Github.Category
 
@@ -12,5 +13,9 @@ defmodule Awesomes do
     |> Enum.map(fn {id, _} -> id end)
     |> Category.get()
     |> Enum.map(fn category -> {category, libs_by_cat[category.id]} end)
+  end
+
+  def create_list(repo) do
+    Repo.insert(%Lib{repo: repo})
   end
 end

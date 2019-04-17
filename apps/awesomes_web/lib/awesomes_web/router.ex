@@ -17,6 +17,7 @@ defmodule AwesomesWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/:username/:name", PageController, :list
   end
 
   # Other scopes may use custom stacks.

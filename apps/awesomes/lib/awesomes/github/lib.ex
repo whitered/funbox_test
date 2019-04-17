@@ -31,6 +31,15 @@ defmodule Awesomes.Github.Lib do
     )
   end
 
+  def get_first_list() do
+    Repo.one(
+      from l in Lib,
+        where: is_nil(l.category_id),
+        order_by: l.id,
+        limit: 1
+    )
+  end
+
   def get_next_to_fetch() do
     Repo.one(
       from l in Lib,

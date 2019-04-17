@@ -1,0 +1,7 @@
+<ul class="stars_selector">
+  <%= for s <- [0, 10, 50, 100, 500, 1000] do %>
+    <li>
+      <a href="?min_stars=<%= s %>">≥ <%= s %> stars</a>
+    </li>
+  <% end %>
+</ul>

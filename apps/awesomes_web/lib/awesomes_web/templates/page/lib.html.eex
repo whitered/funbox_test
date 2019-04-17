@@ -1,0 +1,6 @@
+<li class="lib">
+  <a class="repo" href="<%= lib_url(@lib) %>"><%= @lib.repo %></a>
+  <span class="stars">[<%= @lib.stars_count %> stars]</span>
+  <span class="age">[<%= age(@lib) %> days]</span>
+  <p class="desc"><%= @lib.description %></p>
+</li>
