@@ -35,6 +35,10 @@ defmodule Awesomes.Github.Client do
     {:error, "Error fetching #{url}: [#{status}] #{message}"}
   end
 
+  defp response({:error, reason}) do
+    {:error, to_string(reason)}
+  end
+
   defp repo_url(%{repo: repo}) do
     "repos/" <> repo
   end

@@ -2,6 +2,7 @@ defmodule Awesomes.Github.Lib do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
+  import Awesomes.Utils
 
   alias Awesomes.Repo
   alias Awesomes.Github.Lib
@@ -22,6 +23,14 @@ defmodule Awesomes.Github.Lib do
     has_many :categories, Category, foreign_key: :list_id
   end
 
+  def get_list(repo) do
+    Repo.one(
+      from l in Lib,
+        where: l.repo == ^repo and is_nil(l.category_id),
+        limit: 1
+    )
+  end
+
   def get_next_to_fetch() do
     Repo.one(
       from l in Lib,
@@ -38,6 +47,8 @@ defmodule Awesomes.Github.Lib do
   def update_info(lib, params) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
 
+    params = %{params | description: truncate(params.description)}
+
     lib
     |> cast(params, [:description, :stars_count, :last_commit_at])
     |> change(%{fetched_at: now})
@@ -46,7 +57,7 @@ defmodule Awesomes.Github.Lib do
 
   def set_error(lib, error) do
     lib
-    |> change(error: error)
+    |> change(error: truncate(error))
     |> Repo.update!()
   end
 

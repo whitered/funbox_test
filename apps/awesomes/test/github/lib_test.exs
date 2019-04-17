@@ -2,6 +2,7 @@ defmodule Awesomes.Github.LibTest do
   use Awesomes.DataCase
   import Ecto.Changeset
   alias Awesomes.Github.Lib
+  alias Awesomes.Github.Category
 
   defp ago(hours) do
     NaiveDateTime.utc_now()
@@ -57,6 +58,42 @@ defmodule Awesomes.Github.LibTest do
         |> NaiveDateTime.diff(lib.fetched_at)
 
       assert age in 0..2
+    end
+
+    test "handles long description" do
+      lib = create_lib("repo/lib")
+      desc = String.duplicate("a", 300)
+      assert Lib.update_info(lib, %{description: desc})
+    end
+
+    test "handles null description" do
+      lib = create_lib("repo/lib")
+      assert Lib.update_info(lib, %{description: nil})
+    end
+  end
+
+  describe "set_error" do
+    test "handles long error" do
+      lib = create_lib("repo/lib")
+      error = String.duplicate("a", 300)
+      assert Lib.set_error(lib, error)
+    end
+  end
+
+  describe "get_list" do
+    test "returns list" do
+      list = create_lib("repo/list")
+      assert list == Lib.get_list("repo/list")
+    end
+
+    test "ignores plain libs" do
+      list = create_lib("repo/list")
+
+      category =
+        %Category{title: "Category", description: "Description", list: list} |> Repo.insert!()
+
+      create_lib("repo/lib", %{category: category})
+      assert nil == Lib.get_list("repo/lib")
     end
   end
 end

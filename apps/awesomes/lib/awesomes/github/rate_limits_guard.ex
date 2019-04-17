@@ -43,7 +43,7 @@ defmodule Awesomes.Github.RateLimitsGuard do
       |> Kernel.*(1000)
 
     Logger.info("Waiting for rate limits resetting (#{delay} ms)")
-    :timer.sleep(delay)
+    Process.sleep(delay)
   end
 
   defp update_rate_limits(env) do

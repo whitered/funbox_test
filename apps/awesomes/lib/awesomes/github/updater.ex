@@ -37,13 +37,13 @@ defmodule Awesomes.Github.Updater do
     fetched_at
     |> NaiveDateTime.add(@update_interval, :millisecond)
     |> NaiveDateTime.diff(NaiveDateTime.utc_now(), :millisecond)
-    |> min(0)
+    |> max(0)
   end
 
   defp sleep(0), do: :ok
 
   defp sleep(delay) do
     Logger.info("Sleeping #{delay} ms before update")
-    :timer.sleep(delay)
+    Process.sleep(delay)
   end
 end

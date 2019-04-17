@@ -2,6 +2,7 @@ defmodule Awesomes.Github.Category do
   use Ecto.Schema
   import Ecto.Query
   import Ecto.Changeset
+  import Awesomes.Utils
   alias Awesomes.Repo
   alias Awesomes.Github.Category
   alias Awesomes.Github.Lib
@@ -15,6 +16,9 @@ defmodule Awesomes.Github.Category do
   end
 
   def ensure_exists(list, title, description) do
+    title = truncate(title)
+    description = truncate(description)
+
     Category
     |> Repo.get_by(title: title, list_id: list.id)
     |> case do
